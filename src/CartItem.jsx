@@ -30,7 +30,6 @@ const CartItem = ({ onContinueShopping }) => {
       alert('🛒 Your cart is empty. Add some plants first!');
       return;
     }
-    // ✅ Added explicit "Coming Soon" alert
     alert('🛒 Checkout Coming Soon! We are working on it. 🌿');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 4000);
@@ -104,39 +103,39 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="cart-container">
       <h2>Shopping Cart</h2>
       <p>
         <strong>Total Cart Amount: ${calculateTotalAmount()}</strong>
       </p>
 
       {cart.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <p style={{ fontSize: '24px' }}>🛒 Your cart is empty.</p>
-          <p style={{ color: '#888' }}>Browse our plants and add your favorites!</p>
+        <div className="cart-empty">
+          <p className="cart-empty-icon">🛒 Your cart is empty.</p>
+          <p className="cart-empty-text">Browse our plants and add your favorites!</p>
           <button 
             onClick={handleContinueShopping} 
-            style={{ marginTop: '20px', padding: '12px 30px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px' }}
+            className="cart-start-shopping-btn"
           >
             Start Shopping
           </button>
         </div>
       ) : (
         cart.map(item => (
-          <div key={item.name} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
-            <div className="cart-item-details">
-              <div className="cart-item-name">{item.name}</div>
-              <div className="cart-item-cost">Unit Price: {item.cost}</div>
-              <div className="cart-item-quantity">
-                <button className="cart-item-button" onClick={() => handleDecrement(item)}>-</button>
-                <span className="cart-item-quantity-value">{item.quantity}</span>
-                <button className="cart-item-button" onClick={() => handleIncrement(item)}>+</button>
+          <div key={item.name} className="cart-item-card">
+            <img src={item.image} alt={item.name} className="cart-item-img" />
+            <div className="cart-item-info">
+              <div className="cart-item-title">{item.name}</div>
+              <div className="cart-item-price">Unit Price: {item.cost}</div>
+              <div className="cart-item-qty">
+                <button className="cart-item-qty-btn" onClick={() => handleDecrement(item)}>-</button>
+                <span className="cart-item-qty-value">{item.quantity}</span>
+                <button className="cart-item-qty-btn" onClick={() => handleIncrement(item)}>+</button>
               </div>
-              <div className="cart-item-total">
+              <div className="cart-item-total-cost">
                 Total: ${calculateTotalCost(item)}
               </div>
-              <button className="cart-item-delete" onClick={() => handleRemove(item)}>
+              <button className="cart-item-delete-btn" onClick={() => handleRemove(item)}>
                 Delete
               </button>
             </div>
@@ -144,11 +143,11 @@ const CartItem = ({ onContinueShopping }) => {
         ))
       )}
 
-      <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-        <button onClick={handleContinueShopping} style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+      <div className="cart-actions">
+        <button onClick={handleContinueShopping} className="cart-continue-btn">
           Continue Shopping
         </button>
-        <button onClick={handleCheckoutShopping} style={{ padding: '10px 20px', backgroundColor: '#2196F3', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+        <button onClick={handleCheckoutShopping} className="cart-checkout-btn">
           Checkout
         </button>
       </div>
