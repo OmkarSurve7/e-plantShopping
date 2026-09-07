@@ -30,6 +30,8 @@ const CartItem = ({ onContinueShopping }) => {
       alert('🛒 Your cart is empty. Add some plants first!');
       return;
     }
+    // ✅ Added explicit "Coming Soon" alert
+    alert('🛒 Checkout Coming Soon! We are working on it. 🌿');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 4000);
   };
