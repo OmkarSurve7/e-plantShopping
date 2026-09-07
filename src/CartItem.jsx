@@ -1,11 +1,14 @@
-﻿import React from 'react';
+﻿// src/CartItem.jsx
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
+import CheckoutModal from './CheckoutModal';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const parseItemCostToInteger = (itemCost) => {
     return parseInt(itemCost.replace('$', ''), 10);
@@ -24,8 +27,8 @@ const CartItem = ({ onContinueShopping }) => {
     onContinueShopping(e);
   };
 
-  const handleCheckoutShopping = (e) => {
-    alert('Functionality to be added for future reference');
+  const handleCheckoutShopping = () => {
+    setIsModalOpen(true);
   };
 
   const handleIncrement = (item) => {
@@ -57,7 +60,7 @@ const CartItem = ({ onContinueShopping }) => {
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <h2>Shopping Cart</h2>
       <p>
-        <strong>Total Cart Amount: </strong>
+        <strong>Total Cart Amount: ${calculateTotalAmount()}</strong>
       </p>
 
       {cart.length === 0 ? (
@@ -75,7 +78,7 @@ const CartItem = ({ onContinueShopping }) => {
                 <button className="cart-item-button" onClick={() => handleIncrement(item)}>+</button>
               </div>
               <div className="cart-item-total">
-                Total: 
+                Total: ${calculateTotalCost(item)}
               </div>
               <button className="cart-item-delete" onClick={() => handleRemove(item)}>
                 Delete
@@ -93,6 +96,9 @@ const CartItem = ({ onContinueShopping }) => {
           Checkout
         </button>
       </div>
+
+      {/* Modal Component */}
+      <CheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
