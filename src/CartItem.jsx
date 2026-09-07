@@ -1,14 +1,12 @@
-﻿// src/CartItem.jsx
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
-import CheckoutModal from './CheckoutModal';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const parseItemCostToInteger = (itemCost) => {
     return parseInt(itemCost.replace('$', ''), 10);
@@ -28,7 +26,8 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleCheckoutShopping = () => {
-    setIsModalOpen(true);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   const handleIncrement = (item) => {
@@ -54,6 +53,23 @@ const CartItem = ({ onContinueShopping }) => {
   const calculateTotalCost = (item) => {
     const itemCost = parseItemCostToInteger(item.cost);
     return item.quantity * itemCost;
+  };
+
+  const toastStyle = {
+    position: 'fixed',
+    bottom: '30px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    padding: '16px 32px',
+    borderRadius: '8px',
+    fontSize: '18px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+    zIndex: 9999,
+    transition: 'all 0.3s ease',
+    opacity: showToast ? 1 : 0,
+    visibility: showToast ? 'visible' : 'hidden',
   };
 
   return (
@@ -97,8 +113,10 @@ const CartItem = ({ onContinueShopping }) => {
         </button>
       </div>
 
-      {/* Modal Component */}
-      <CheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Toast Notification */}
+      <div style={toastStyle}>
+        🛒 Checkout coming soon! We are working on it. 🌿
+      </div>
     </div>
   );
 };
