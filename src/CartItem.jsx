@@ -50,10 +50,16 @@ const CartItem = ({ onContinueShopping }) => {
     return itemCost * item.quantity;
   };
 
+  // Handle checkout button click
+  const handleCheckoutShopping = (e) => {
+    e.preventDefault();
+    alert('Checkout functionality coming soon!');
+  };
+
   return (
     <div className="cart-container">
       <h2 style={{ color: 'black' }}>
-        Total Cart Amount: ${calculateTotalAmount()}
+        Total Cart Amount: ${calculateTotalAmount().toFixed(2)}
       </h2>
 
       <div>
@@ -90,7 +96,7 @@ const CartItem = ({ onContinueShopping }) => {
               </div>
 
               <div className="cart-item-total">
-                Total: ${calculateTotalCost(item)}
+                Total: ${calculateTotalCost(item).toFixed(2)}
               </div>
 
               <button
@@ -112,14 +118,17 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button
           className="get-started-button"
-          onClick={(e) => handleContinueShopping(e)}
+          onClick={handleContinueShopping}
         >
           Continue Shopping
         </button>
 
         <br />
 
-        <button className="get-started-button1">
+        <button
+          className="get-started-button1"
+          onClick={handleCheckoutShopping}
+        >
           Checkout
         </button>
       </div>
